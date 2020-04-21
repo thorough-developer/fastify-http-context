@@ -31,17 +31,32 @@ necessary.
 From there you can set a context in another hook, route, or method that is within scope. For instance:
 
 ```js
-const { setContext, getContext } = require('fastify-http-context');
+const { fastifyHttpContextPlugin, setContext, getContext } = require('fastify-http-context');
 
-const getUserFromToken = require('get-user-from-token');
+const fastify = require('fastify')();
 
-fastify.addHook('preHandler', (req, reply, done) => {
-  setContext('user', getUserFromToken(req.headers['authorization']);
-  done(); 
+fastify.register(fastifyHttpContextPlugin, {
+ defaults: {
+  user: {
+   id: 'system'
+  }
+ }
 });
 
+fastify.addHook('onRequest', (req, reply, done) => {
+  // overwrite the defaults
+  setContext('user', { id: 'helloUser' });
+  done();
+});
+
+// this should now get the user id of helloUser instead of the default
 fastify.get('/', (req, reply) => {
-  // sends the user info that was set earlier in the call
-  reply.send(getContext('user'));
+  const user = getContext('user');
+  reply.code(200).send( { user });
+});
+
+fastify.listen(3000, (err, address) => {
+  if (err) throw err
+  fastify.log.info(`server listening on ${address}`)
 });
 ```
