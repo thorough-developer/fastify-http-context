@@ -1,3 +1,5 @@
+![fastify-http-context Package](https://github.com/thorough-developer/fastify-http-context/workflows/fastify-http-context%20Package/badge.svg)
+
 # Fastify HTTP Context
 
 > This plugin was inspired by express-http-context, but works more seamlessly within the fastify ecosystem.
