@@ -20,7 +20,6 @@ const setContext = (key, value) => {
 function plugin (fastify, opts, next) {
   const defaults = new Map(Object.entries(opts.defaults || {}));
   fastify.addHook('onRequest', (req, res, done) => {
-    
     asyncLocalStorage.run(defaults, () => {
       done();
     });
