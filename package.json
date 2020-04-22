@@ -1,6 +1,6 @@
 {
   "name": "fastify-http-context",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simulates a thread of execution to allow for true session context to take place per api call within the fastify lifecycle of calls.",
   "main": "index.js",
   "scripts": {
@@ -15,14 +15,10 @@
     "url": "git+https://github.com/thorough-developer/fastify-http-context.git"
   },
   "keywords": [
-    "Fastify",
-    "Fastify",
-    "Plugin",
-    "Session",
-    "Context",
-    "Fastify",
-    "Session",
-    "Context"
+    "fastify",
+    "fastify-plugin",
+    "http-context",
+    "express-http-context"
   ],
   "author": "Chris Washington <c.arnez.washington@gmail.com>",
   "license": "MIT",
@@ -31,17 +27,17 @@
   },
   "homepage": "https://github.com/chris-washington/fastify-session-context#readme",
   "dependencies": {
-    "autocannon": "^4.6.0",
     "cls-hooked": "^4.2.2",
-    "concurrently": "^5.1.0",
     "fastify-plugin": "^1.6.1",
-    "hyperid": "^2.0.3",
-    "mocha": "^7.1.1",
-    "nyc": "^15.0.1"
+    "hyperid": "^2.0.3"
   },
   "devDependencies": {
+    "autocannon": "^4.6.0",
     "chai": "^4.2.0",
+    "concurrently": "^5.1.0",
     "fastify": "^2.13.1",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
     "proxyquire": "^2.1.3",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
