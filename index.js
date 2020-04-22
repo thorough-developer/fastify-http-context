@@ -45,6 +45,6 @@ module.exports = {
   getContext: getContext,
   fastifyHttpContextPlugin: fp(plugin, {
     fastify: '2.x',
-    name: 'fastify-session-context'
+    name: 'fastify-http-context'
   })
 };
