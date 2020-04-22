@@ -27,9 +27,7 @@
   },
   "homepage": "https://github.com/chris-washington/fastify-session-context#readme",
   "dependencies": {
-    "cls-hooked": "^4.2.2",
-    "fastify-plugin": "^1.6.1",
-    "hyperid": "^2.0.3"
+    "fastify-plugin": "^1.6.1"
   },
   "devDependencies": {
     "autocannon": "^4.6.0",
