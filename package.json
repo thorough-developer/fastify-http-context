@@ -1,12 +1,15 @@
 {
   "name": "fastify-http-context",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simulates a thread of execution to allow for true session context to take place per api call within the fastify lifecycle of calls.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha test/**/*.js"
+    "test": "nyc mocha test/**/*.js",
+    "benchmark": "concurrently -k -s first \"node ./examples/baseline.js\" \"sleep 10 && autocannon -c 100 -d 5 -p 10 localhost:3000/\""
   },
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thorough-developer/fastify-http-context.git"
@@ -28,7 +31,9 @@
   },
   "homepage": "https://github.com/chris-washington/fastify-session-context#readme",
   "dependencies": {
+    "autocannon": "^4.6.0",
     "cls-hooked": "^4.2.2",
+    "concurrently": "^5.1.0",
     "fastify-plugin": "^1.6.1",
     "hyperid": "^2.0.3",
     "mocha": "^7.1.1",
