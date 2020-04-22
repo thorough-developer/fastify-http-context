@@ -1,6 +1,6 @@
 {
   "name": "fastify-http-context",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simulates a thread of execution to allow for true session context to take place per api call within the fastify lifecycle of calls.",
   "main": "index.js",
   "scripts": {
