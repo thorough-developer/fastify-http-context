@@ -8,7 +8,8 @@
     "benchmark": "concurrently -k -s first \"node ./examples/baseline.js\" \"sleep 10 && autocannon -c 100 -d 5 -p 10 localhost:3000/\""
   },
   "files": [
-    "index.js"
+    "index.js",
+    "async-local-storage"
   ],
   "repository": {
     "type": "git",
