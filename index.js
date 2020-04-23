@@ -1,26 +1,19 @@
 const fp = require('fastify-plugin');
 
-const { AsyncLocalStorage } = require('async_hooks');
-const asyncLocalStorage = new AsyncLocalStorage();
+const { namespace } = require('./async-local-storage');
 
 const getContext = (key) => {
-  const store = asyncLocalStorage.getStore();
-  
-  return store != null ? store.get(key) : undefined;  
+  return namespace.getContext(key);
 };
 
 const setContext = (key, value) => {
-  const store = asyncLocalStorage.getStore();
-
-  if (store != null) {
-    store.set(key, value);
-  }
+  namespace.setContext(key, value);
 };
 
 function plugin (fastify, opts, next) {
   const defaults = new Map(Object.entries(opts.defaults || {}));
   fastify.addHook('onRequest', (req, res, done) => {
-    asyncLocalStorage.run(defaults, () => {
+    namespace.doRun(defaults, () => {
       done();
     });
   });

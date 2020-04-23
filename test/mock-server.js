@@ -1,7 +1,7 @@
 const { fastifyHttpContextPlugin, setContext, getContext } = require('../');
 
-const sharedRoute =  async(request, reply) => {
-  return reply.send({ user: getContext('user')})
+const sharedRoute = (request, reply) => {
+  reply.send({ user: getContext('user')})
 }
 
 const buildFastify = ( withDefaults = false) => {
