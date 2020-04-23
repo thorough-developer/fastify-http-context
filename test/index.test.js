@@ -84,14 +84,24 @@ describe('Testing fastify-http-context', () => {
 
         beforeEach(() => {
           fastify.addHook('preHandler', async (req, reply) => {
-            setContext('user', user);
+            const id = req.headers['x-header-user'];
+            if (id) {
+              setContext('user', { id });
+            }
             return;
           });
         });
 
         it('then the returned value is what is in the context', async() => {
-           const result = await fastify.inject({ method: 'GET', url: '/' });
+           const defaultUser = { id: 'system' };
+           const result = await fastify.inject({ method: 'GET', url: '/', headers: { 'x-header-user': 'helloUser' } });
            expect(JSON.parse(result.body).user).to.deep.equal(user);
+           
+           const resultNoHeader = await fastify.inject({ method: 'GET', url: '/'});
+           expect(JSON.parse(resultNoHeader.body).user).to.deep.equal(defaultUser);
+
+           const resultRedo = await fastify.inject({ method: 'GET', url: '/', headers: { 'x-header-user': 'iAmUser' } });
+           expect(JSON.parse(resultRedo.body).user).to.deep.equal({ id: 'iAmUser' });
         });
    
       });
