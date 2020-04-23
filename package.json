@@ -9,7 +9,7 @@
   },
   "files": [
     "index.js",
-    "async-local-storage"
+    "async-local-storage.js"
   ],
   "repository": {
     "type": "git",
