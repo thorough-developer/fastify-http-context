@@ -37,7 +37,13 @@ if (AsyncLocalStorage == null) {
   }
 
   doRun(defaults, callback) {
-    this.run(defaults, callback);
+    this.run(new Map(), () => {
+      const store = this.getStore();
+      for (let [key, value] of defaults) {
+        store.set(key, value);
+      }
+      callback();
+    });
   }
 
   setContext(key, value) {
