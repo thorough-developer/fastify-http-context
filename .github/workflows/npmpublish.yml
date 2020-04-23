@@ -6,7 +6,7 @@ name: fastify-http-context Package
 on:
   release:
     types: [created]
-
+    branch: v1
 jobs:
   build:
     runs-on: ubuntu-latest
