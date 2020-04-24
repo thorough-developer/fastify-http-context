@@ -1,5 +1,5 @@
 let AsyncLocalStorage = require('async_hooks').AsyncLocalStorage;
-let namespace; // = new AsyncLocalStorage();
+let als;
 
 if (AsyncLocalStorage == null) {
   const createNamespace = require('cls-hooked').createNamespace;
@@ -9,44 +9,41 @@ if (AsyncLocalStorage == null) {
 
   const namespaceIdentifier = hyperid.decode(id).uuid;
   
-  namespace = createNamespace(namespaceIdentifier);
-  namespace.getContext = function(key) {
-    if (this.active) {
-      return this.get(key);
+  const _namespace = createNamespace(namespaceIdentifier);
+  als = {};
+  als.get = function(key) {
+    if (_namespace.active) {
+      return _namespace.get(key);
     }
     return undefined;
   };  
 
-  namespace.setContext = function(key, value){
-    if (this.active) {
-      this.set(key, value);
+  als.set = function(key, value){
+    if (_namespace.active) {
+      _namespace.set(key, value);
     }
   }
-  namespace.doRun = ( defaults = {}, callback) => {
-     namespace.run(() => {
-       for (let [key, value] of defaults) {
-        namespace.set(key, value);
+  als.doRun = ( defaults = {}, callback) => {
+     _namespace.run(() => {
+       for (let [key, value] of Object.entries(defaults)) {
+        _namespace.set(key, value);
        }
        callback();
      });
    };
 } else {
- namespace = new class AsyncLocalStorageFacade extends AsyncLocalStorage {
+ als = new class AsyncLocalStorageFacade extends AsyncLocalStorage {
   constructor() {
    super();
   }
 
   doRun(defaults, callback) {
-    this.run(new Map(), () => {
-      const store = this.getStore();
-      for (let [key, value] of defaults) {
-        store.set(key, value);
-      }
+    this.run(new Map(Object.entries(defaults)), () => {
       callback();
     });
   }
 
-  setContext(key, value) {
+  set(key, value) {
     const store = this.getStore();
 
     if (store != null) {
@@ -54,7 +51,7 @@ if (AsyncLocalStorage == null) {
     }
   }
 
-  getContext(key) {
+  get(key) {
     const store = this.getStore();
 
     return store != null ? store.get(key) : undefined;
@@ -62,7 +59,4 @@ if (AsyncLocalStorage == null) {
  }();
 }
 
-
-module.exports = {
-  namespace: namespace
-}
+module.exports = als;

@@ -1,17 +1,17 @@
 const fp = require('fastify-plugin');
 
-const { namespace } = require('./async-local-storage');
+const namespace = require('./async-local-storage');
 
 const getContext = (key) => {
-  return namespace.getContext(key);
+  return namespace.get(key);
 };
 
 const setContext = (key, value) => {
-  namespace.setContext(key, value);
+  namespace.set(key, value);
 };
 
 function plugin (fastify, opts, next) {
-  const defaults = new Map(Object.entries(opts.defaults || {}));
+  const defaults = opts.defaults || {};
   fastify.addHook('onRequest', (req, res, done) => {
     namespace.doRun(defaults, () => {
       done();
