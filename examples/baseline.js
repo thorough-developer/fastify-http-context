@@ -1,4 +1,4 @@
-const { fastifyHttpContextPlugin, setContext, getContext } = require('../');
+const { fastifyHttpContextPlugin, httpContext } = require('../');
 
 const fastify = require('fastify')();
 
@@ -12,13 +12,13 @@ fastify.register(fastifyHttpContextPlugin, {
 
 fastify.addHook('onRequest', (req, reply, done) => {
   // overwrite the defaults
-  setContext('user', { id: 'helloUser' });
+  httpContext.set('user', { id: 'helloUser' });
   done();
 });
 
 // this should now get the user id of helloUser instead of the default
 fastify.get('/', (req, reply) => {
-  const user = getContext('user');
+  const user = httpContext.get('user');
   reply.code(200).send( { user });
 });
 
