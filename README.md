@@ -1,4 +1,4 @@
-![fastify-http-context Package](https://github.com/thorough-developer/fastify-http-context/workflows/fastify-http-context%20Package/badge.svg)
+![fastitfy-http-context Package](https://github.com/thorough-developer/fastify-http-context/workflows/fastify-http-context%20Package/badge.svg)
 
 # Fastify HTTP Context
 
