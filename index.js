@@ -1,19 +1,33 @@
 const fp = require('fastify-plugin');
 
-const namespace = require('./async-local-storage');
+const fastAls = require('fast-als');
 
-const getContext = (key) => {
-  return namespace.get(key);
+const httpContext = {
+    get: fastAls.get,
+    set: fastAls.set
 };
 
+/**
+ * @deprecated
+ * @param {*} key 
+ */
+const getContext = (key) => {
+  return httpContext.get(key);
+};
+
+/**
+ * @deprecated - Please use httpContext instead
+ * @param {*} key 
+ * @param {*} value 
+ */
 const setContext = (key, value) => {
-  namespace.set(key, value);
+  httpContext.set(key, value);
 };
 
 function plugin (fastify, opts, next) {
   const defaults = opts.defaults || {};
   fastify.addHook('onRequest', (req, res, done) => {
-    namespace.doRun(defaults, () => {
+    fastAls.runWith(defaults, () => {
       done();
     });
   });
@@ -21,6 +35,7 @@ function plugin (fastify, opts, next) {
 }
 
 module.exports = {
+  httpContext: httpContext,
   setContext: setContext,
   getContext: getContext,
   fastifyHttpContextPlugin: fp(plugin, {
