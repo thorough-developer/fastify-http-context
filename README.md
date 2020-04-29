@@ -27,8 +27,12 @@ const fastify = require('fastify');
 fastify.register(fastifyHttpContextPlugin, { defaults: user: { id: 'system' } };
 ``` 
 
-This plugin takes in a single option named `defaults`. These are what the values should be if not set. This is optional and not necessary. There are cases where defaults are not wanted nor
-necessary.
+This plugin takes in one of two option named `defaults` and `hook`. 
+
+`defaults` are what the values should be if not set. This is optional and not necessary. There are cases where defaults are not wanted nor
+necessary. 
+
+`hook` is one of the fastify lifecycle hooks. By default it is set to `onRequest`.
 
 From there you can set a context in another hook, route, or method that is within scope. For instance:
 
@@ -38,6 +42,7 @@ const { fastifyHttpContextPlugin, httpContext } = require('fastify-http-context'
 const fastify = require('fastify')();
 
 fastify.register(fastifyHttpContextPlugin, {
+ hook: 'onRequest', // this is optional. If not set will default to onRequest
  defaults: {
   user: {
    id: 'system'

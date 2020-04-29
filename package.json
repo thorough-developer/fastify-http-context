@@ -1,6 +1,6 @@
 {
   "name": "fastify-http-context",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Simulates a thread of execution to allow for true session context to take place per api call within the fastify lifecycle of calls.",
   "main": "index.js",
   "scripts": {
@@ -34,6 +34,7 @@
   "devDependencies": {
     "autocannon": "^4.6.0",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "concurrently": "^5.1.0",
     "fastify": "^2.13.1",
     "mocha": "^7.1.1",
