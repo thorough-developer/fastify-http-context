@@ -32,7 +32,8 @@ This plugin takes in one of two option named `defaults` and `hook`.
 `defaults` are what the values should be if not set. This is optional and not necessary. There are cases where defaults are not wanted nor
 necessary. 
 
-`hook` is one of the fastify lifecycle hooks. By default it is set to `onRequest`.
+`hook` is one of the fastify lifecycle hooks. By default it is set to `onRequest`. Some times where the context is run from matters. For instance, if using a library like Typeorm the context gets lost in Subscribers if the context is run in `onRequest` but does not get lost if run in `preHandler` 
+(not sure why but that is the motivation for allowing the hook to be configurable).
 
 From there you can set a context in another hook, route, or method that is within scope. For instance:
 
