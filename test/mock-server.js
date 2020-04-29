@@ -1,25 +1,27 @@
-const { fastifyHttpContextPlugin, setContext, getContext } = require('../');
+const { fastifyHttpContextPlugin, httpContext} = require('../');
 
 const sharedRoute = (request, reply) => {
-  reply.send({ user: getContext('user')})
+  reply.send({ user: httpContext.get('user')})
 }
 
-const buildFastify = ( withDefaults = false) => {
+const buildFastify = async ( withDefaults = false, withInvalidHook = false) => {
   const fastify = require('fastify')({
     disableRequestLogging: true
   });
   
-  let options;
+  let options = {};
 
   if (withDefaults) {
-    options = {
-      defaults: {
+    options.defaults = {
         user: { id: 'system' }
-      }
     };
   }
 
-  fastify.register(fastifyHttpContextPlugin, options);
+  if (withInvalidHook) {
+      options.hook = 'invalidHook';
+  }
+  
+  await fastify.register(fastifyHttpContextPlugin, options);
 
   fastify.get('/', sharedRoute);
 
