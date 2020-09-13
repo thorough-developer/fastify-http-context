@@ -21,7 +21,7 @@ npm i fastify-http-context
 Next, set up the plugin:
 
 ```js
-const { fastifyHttpContextPlugin } = fastify-http-context
+const { fastifyHttpContextPlugin } = require('fastify-http-context');
 const fastify = require('fastify');
 
 fastify.register(fastifyHttpContextPlugin, { defaults: user: { id: 'system' } };
